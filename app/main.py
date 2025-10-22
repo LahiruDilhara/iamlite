@@ -13,6 +13,5 @@ Configuration()
 # Initialize the database
 Database()
 
-
 app = FastAPI(title=Configuration().get_app_config().APP_TITLE)
 app.include_router(admin_router)

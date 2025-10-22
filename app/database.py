@@ -3,6 +3,11 @@ from sqlalchemy.orm import sessionmaker, Session
 from app.config import Configuration
 from app.log.logger import logger
 from typing import Generator
+from app.models.BaseModel import BaseModel
+
+# import models to register them with BaseModel
+from app.models import IamConfig,IamSysUser
+
 
 class Database():
     _instance = None
@@ -26,6 +31,12 @@ class Database():
             self._session = sessionmaker(autocommit=False, autoflush=False, bind=self._engine)
         
         logger.info("Database initialized successfully.")
+
+        self.init_tables()
+    
+    def init_tables(self):
+        BaseModel.metadata.create_all(bind=self._engine)
+        logger.info("Database tables created successfully.")
     
     def getSession(self)->Generator[Session,None,None]:
         db = self._session()

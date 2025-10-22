@@ -1,9 +1,8 @@
-from app.db.sqlite_session import BaseModel
 from sqlalchemy import Column, Integer, String, Boolean, Text
-from app.config import SQLITE_CONFIG_TABLE_NAME
+from app.models.BaseModel import BaseModel
 
 class IAMConfig(BaseModel):
-    __tablename__ = SQLITE_CONFIG_TABLE_NAME
+    __tablename__ = "iam_configs"
 
     id = Column(Integer, primary_key=True,autoincrement=True,index=True)
     config_name = Column(String(255), nullable=False, unique=True)

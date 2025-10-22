@@ -1,9 +1,8 @@
-from app.db.sqlite_session import BaseModel
+from app.models.BaseModel import BaseModel
 from sqlalchemy import Column, Integer, String, Boolean, Text
-from app.config import SQLITE_ADMINS_TABLE_NAME
 
 class IAMAdmin(BaseModel):
-    __tablename__ = SQLITE_ADMINS_TABLE_NAME
+    __tablename__ = "iam_sys_users"
 
     id = Column(Integer, primary_key=True,autoincrement=True,index=True)
     username = Column(String(150), nullable=False, unique=True)
