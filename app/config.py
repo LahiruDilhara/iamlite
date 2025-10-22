@@ -1,6 +1,5 @@
-from dataclasses import dataclass
 from pathlib import Path
-from app.log import logger
+from app.log.logger import logger
 import os
 from abc import ABC as abstract, abstractmethod
 
@@ -42,6 +41,7 @@ class DBConfig(Config):
         ])
         if not valide:
             logger.error("One or more database configuration values are missing or invalid.")
+            logger.debug(f"DB Config - HOST: {self.POSTGRES_DB_HOST}, PORT: {self.POSTGRES_DB_PORT}, NAME: {self.POSTGRES_DB_NAME}, USER: {self.POSTGRES_DB_USER}, PASSWORD: {'****' if self.POSTGRES_DB_PASSWORD else None}")
             raise Exception("One or more database configuration values are missing or invalid.")
 
 class APPConfig(Config):
