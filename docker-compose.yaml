@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: iam_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: iam_user
+      POSTGRES_PASSWORD: iam_password
+      POSTGRES_DB: iam_lite_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
