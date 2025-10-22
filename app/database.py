@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine,Engine
-from sqlalchemy.orm import sessionmaker, declarative_base,Session
+from sqlalchemy.orm import sessionmaker, Session
 from app.config import Configuration
 from app.log.logger import logger
+from typing import Generator
 
 class Database():
     _instance = None
@@ -26,7 +27,7 @@ class Database():
         
         logger.info("Database initialized successfully.")
     
-    def getSession(self)->Session:
+    def getSession(self)->Generator[Session,None,None]:
         db = self._session()
         try:
             yield db
