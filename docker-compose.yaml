@@ -4,9 +4,9 @@ services:
     container_name: iam_postgres
     restart: always
     environment:
-      POSTGRES_USER: iam_user
-      POSTGRES_PASSWORD: iam_password
-      POSTGRES_DB: iam_lite_db
+      POSTGRES_USER: ${POSTGRES_DB_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

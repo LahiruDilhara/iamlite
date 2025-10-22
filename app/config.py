@@ -14,6 +14,7 @@ POSTGRES_DB_PORT = None
 POSTGRES_DB_NAME = None
 POSTGRES_DB_USER = None
 POSTGRES_DB_PASSWORD = None
+DATABASE_CONFIGURATIONS_READY = False
 
 def init_config()->None:
     global POSTGRES_DB_HOST, POSTGRES_DB_PORT, POSTGRES_DB_NAME, POSTGRES_DB_USER, POSTGRES_DB_PASSWORD, APP_TITLE
@@ -27,4 +28,6 @@ def init_config()->None:
     if not all([POSTGRES_DB_HOST, POSTGRES_DB_PORT, POSTGRES_DB_NAME, POSTGRES_DB_USER, POSTGRES_DB_PASSWORD]):
         logger.error("Database configuration is incomplete. Please set all required environment variables.")
         logger.error(f"POSTGRES_DB_HOST: {POSTGRES_DB_HOST}. POSTGRES_DB_PORT: {POSTGRES_DB_PORT}. POSTGRES_DB_NAME: {POSTGRES_DB_NAME}. POSTGRES_DB_USER: {POSTGRES_DB_USER}. POSTGRES_DB_PASSWORD: {'SET' if POSTGRES_DB_PASSWORD else 'NOT SET'}.")
-        raise EnvironmentError("Database configuration is incomplete. Please set all required environment variables.")
+        DATABASE_CONFIGURATIONS_READY = False
+        return
+    DATABASE_CONFIGURATIONS_READY = True
