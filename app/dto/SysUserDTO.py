@@ -1,4 +1,5 @@
 from pydantic import BaseModel,Field, EmailStr,field_validator
+from app.models.IamSysUser import IAMSysUser
 
 class SysUserDTO(BaseModel):
     username:str = Field(...,min_length=2,max_length=50,description="Username of the system user")

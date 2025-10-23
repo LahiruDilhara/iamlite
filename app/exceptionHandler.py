@@ -2,6 +2,7 @@ from fastapi.responses import JSONResponse
 from app.log.logger import logger
 from fastapi import Request,FastAPI
 from fastapi.exceptions import RequestValidationError
+from app.core.exceptions import *
 
 async def not_found_exception_handler(request, exc):
     return JSONResponse(
@@ -24,6 +25,23 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         }
     )
 
+async def service_validation_exception_handler(request: Request, exc: ValidationException):
+    logger.error(f"Service validation error: {str(exc)}")
+    return JSONResponse(
+        status_code=400,
+        content={"error": str(exc)}
+    )
+
+async def generic_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {str(exc)}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": "Internal server error"}
+    )
+
+
 def register_exception_handlers(app:FastAPI):
     app.add_exception_handler(404, not_found_exception_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
+    app.add_exception_handler(ValidationException, service_validation_exception_handler)
+    app.add_exception_handler(Exception, generic_exception_handler)
